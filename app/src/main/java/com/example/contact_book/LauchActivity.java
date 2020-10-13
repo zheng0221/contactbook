@@ -16,7 +16,6 @@ import android.widget.ImageView;
 
 public class LauchActivity extends AppCompatActivity {
 
-    private boolean isExt=false;
     private ImageView logo_1;
     private ImageView logo_2;
     private ImageView flash;
