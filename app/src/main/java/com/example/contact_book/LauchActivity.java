@@ -100,7 +100,7 @@ public class LauchActivity extends AppCompatActivity {
         Fade_in(logo_2);
     }
 
-    public void Fade_in(View view){
+    private void Fade_in(View view){
         AlphaAnimation alphaAnimation=new AlphaAnimation(0.0f,1.0f);
         alphaAnimation.setFillAfter(true);
         alphaAnimation.setDuration(2000);
@@ -109,7 +109,7 @@ public class LauchActivity extends AppCompatActivity {
         view.startAnimation(alphaAnimation);
     }
 
-    public void Fade_out(View view){
+    private void Fade_out(View view){
         AlphaAnimation alphaAnimation=new AlphaAnimation(1.0f,0.0f);
         alphaAnimation.setFillAfter(true);
         alphaAnimation.setDuration(2000);
@@ -118,27 +118,27 @@ public class LauchActivity extends AppCompatActivity {
         view.startAnimation(alphaAnimation);
     }
 
-    public void Flash_in(View view){
+    private void Flash_in(View view){
         Animation animation=AnimationUtils.loadAnimation(LauchActivity.this,R.anim.flash_in);
         animation.setFillAfter(true);
         animation.setAnimationListener(animationListener_flash_out);
         view.startAnimation(animation);
     }
 
-    public void Flash_out(View view){
+    private void Flash_out(View view){
         Animation animation=AnimationUtils.loadAnimation(LauchActivity.this,R.anim.flash_out);
         animation.setAnimationListener(animationListener_finish);
         animation.setFillAfter(true);
         view.startAnimation(animation);
     }
 
-    public void rotate_scale_positive(View view){
+    private void rotate_scale_positive(View view){
         Animation animation=AnimationUtils.loadAnimation(LauchActivity.this,R.anim.rotate_scale_positive);
         animation.setFillAfter(true);
         view.startAnimation(animation);
     }
 
-    public void rotate_scale_reverse(View view){
+    private void rotate_scale_reverse(View view){
         Animation animation=AnimationUtils.loadAnimation(LauchActivity.this,R.anim.rotate_scale_reverse);
         animation.setFillAfter(true);
         view.startAnimation(animation);

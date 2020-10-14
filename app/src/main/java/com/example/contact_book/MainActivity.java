@@ -12,32 +12,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.d(tag,"1");
-
-        //Vector<miniCard> cardList=new Vector<miniCard>();
-        //initList(cardList);
-
-        //LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainActivity.this);
-        //linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-
-        Log.d(tag,"2");
-
-        //RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rec_view);
-
-        Log.d(tag,"3");
-
-        //recyclerView.setLayoutManager(linearLayoutManager);
-
-        Log.d(tag,"4");
-        //miniCardAdapter miniCardAdapter_1=new miniCardAdapter(cardList);
-
-        Log.d(tag,"5");
-
-        //recyclerView.setAdapter(miniCardAdapter_1);
-
-
-
     }
 
     protected void initList(Vector<miniCard> inList){
