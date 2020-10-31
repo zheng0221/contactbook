@@ -15,11 +15,11 @@ public class miniCardAdapter extends RecyclerView.Adapter<miniCardAdapter.ViewHo
     private List<miniCard> dataList;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView textView;
+        //private TextView textView;
 
         private ViewHolder(View view){
             super(view);
-            textView=view.findViewById(R.id.minicard_name);
+            //textView=view.findViewById(R.id.minicard_name);
         }
     }
 
@@ -40,6 +40,6 @@ public class miniCardAdapter extends RecyclerView.Adapter<miniCardAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NotNull ViewHolder holder,int position){
-        holder.textView.setText(dataList.get(position).name);
+        //holder.textView.setText(dataList.get(position).name);
     }
 }

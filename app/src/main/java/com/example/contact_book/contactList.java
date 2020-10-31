@@ -4,6 +4,7 @@ package com.example.contact_book;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,30 +30,32 @@ public class contactList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("My","A");
         initData(data);
-        Log.d("My","B");
         view=inflater.inflate(R.layout.fragment_contact_list,container,false);
-        Log.d("My","C");
         initRecyclerView();
-        Log.d("My","D");
         return view;
     }
 
     private void initRecyclerView(){
+        //布局管理器
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        Log.d("My","E");
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        Log.d("My","F");
+
+        //RecyclerView分割线
+        DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
+
+        //实例化RecyclerView，声明所在布局
         RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.contact_list);
-        Log.d("My","G");
+
+        //实例化名片的Adapter
         miniCardAdapter adapter=new miniCardAdapter(data);
-        Log.d("My","H");
+
+        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
-        Log.d("My","I");
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
+    //用于测试
     private void initData(Vector<miniCard> inList){
         for(int i=0;i!=3;++i){
             inList.add(new miniCard("Alan"));

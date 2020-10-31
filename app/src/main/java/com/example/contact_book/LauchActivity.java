@@ -19,7 +19,7 @@ public class LauchActivity extends AppCompatActivity {
     private ImageView logo_1;
     private ImageView logo_2;
     private ImageView flash;
-    private Animation.AnimationListener animationListener_logo= new Animation.AnimationListener() {
+    private final Animation.AnimationListener animationListener_logo= new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
             rotate_scale_positive(logo_1);
@@ -36,7 +36,7 @@ public class LauchActivity extends AppCompatActivity {
 
         }
     };
-    private Animation.AnimationListener animationListener_flash_out=new Animation.AnimationListener() {
+    private final Animation.AnimationListener animationListener_flash_out=new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
 
@@ -52,7 +52,7 @@ public class LauchActivity extends AppCompatActivity {
 
         }
     };
-    private Animation.AnimationListener animationListener_flash_in=new Animation.AnimationListener() {
+    private final Animation.AnimationListener animationListener_flash_in=new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
 
@@ -68,7 +68,7 @@ public class LauchActivity extends AppCompatActivity {
 
         }
     };
-    private Animation.AnimationListener animationListener_finish=new Animation.AnimationListener() {
+    private final Animation.AnimationListener animationListener_finish=new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
 
@@ -97,7 +97,10 @@ public class LauchActivity extends AppCompatActivity {
 
         flash.setVisibility(View.INVISIBLE);
 
-        Fade_in(logo_2);
+        //在测试时将动画略去
+        //Fade_in(logo_2);
+        startActivity(new Intent(LauchActivity.this,MainActivity.class));
+        finish();
     }
 
     private void Fade_in(View view){
