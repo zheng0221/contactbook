@@ -6,10 +6,17 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
-    String tag="My";
+    private String tag="My";
+    private MySQLiteOpenHelper mySQLiteOpenHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //数据库连接
-        MySQLiteOpenHelper dbhelper=new MySQLiteOpenHelper(MainActivity.this);
-        SQLiteDatabase db=dbhelper.getWritableDatabase();
+        mySQLiteOpenHelper=new MySQLiteOpenHelper(MainActivity.this);
+        db=mySQLiteOpenHelper.getWritableDatabase();
 
         //init_contact_list_database(db);
+
     }
 
     protected void init_contact_list_database(SQLiteDatabase db){
@@ -36,4 +44,12 @@ public class MainActivity extends AppCompatActivity {
         db.insert("contact_list_database",null,values);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //关闭数据库连接
+        db.close();
+        mySQLiteOpenHelper.close();
+    }
 }

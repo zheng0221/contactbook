@@ -17,7 +17,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     String create_contact_list_database_sql=
             "create table " +CONTACT_LIST_DATABASE_NAME+ " ("
             +"id integer primary key autoincrement"
-            +",phone text"
+            +",phone text not null"
             +",name text"
             +",gender text"
             +",relationship text"
