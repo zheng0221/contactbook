@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         values.put("city","广州");
         values.put("address","华南理工大学-大学城校区");
         db.insert("contact_list_database",null,values);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        new EditText_focus_processor().StartProcess(getBaseContext(),getCurrentFocus(),ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
