@@ -40,8 +40,5 @@
         <attr name="indicatorTextSize"/>
         <attr name="indicatorTextColor"/>
     </declare-styleable>
-    <declare-styleable name="YearPicker">
-        <attr name="startYear" format="integer"/>
-        <attr name="endYear" format="integer"/>
-    </declare-styleable>
+
 </resources>

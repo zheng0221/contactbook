@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class new_contact_msg_input extends AppCompatActivity {
     private MySQLiteOpenHelper mySQLiteOpenHelper;
@@ -38,6 +40,17 @@ public class new_contact_msg_input extends AppCompatActivity {
                 db.insert("contact_list_database",null,values);
             }
         });
+
+        final TextView textView=(TextView)findViewById(R.id.relationship_text);
+        final RelationshipPicker relationshipPicker=(RelationshipPicker)findViewById(R.id.relationship_wheel_picker);
+        relationshipPicker.setOnRelationshipSelectedListener(new RelationshipPicker.OnRelationshipSelectedListener() {
+            @Override
+            public void onRelationshipSelected(String Relationship) {
+                Toast.makeText(getBaseContext(),relationshipPicker.getSelectedRelationship().toString(),Toast.LENGTH_SHORT).show();
+                textView.setText(relationshipPicker.getSelectedRelationship());
+            }
+        });
+
     }
 
     /*

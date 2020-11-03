@@ -53,6 +53,7 @@ public class contactList extends Fragment {
             });
         }
 
+
     }
 
     private void initRecyclerView(){

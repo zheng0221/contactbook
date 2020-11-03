@@ -9,10 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".wheelviewtest"></activity>
         <activity
             android:name=".new_contact_msg_input"
-            android:theme="@style/NoTitleFullscreen"></activity>
+            android:theme="@style/NoTitleFullscreen" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoTitleFullscreen" />
