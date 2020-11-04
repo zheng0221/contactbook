@@ -15,7 +15,7 @@
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/conract_list_frag"
+            android:id="@+id/contact_list_frag"
             android:name="com.example.contact_book.contactList"
             android:layout_below="@id/search_title"
             android:layout_above="@id/bottom_title" />
@@ -51,7 +51,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Info"
+                android:text="INFO"
+                android:background="@android:color/white"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/record_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="RECORD"
                 android:background="@android:color/white"
                 android:layout_gravity="center" />
 
