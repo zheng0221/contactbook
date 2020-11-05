@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,10 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.contact_book.Record_fragment;
+import com.example.contact_book.RecordFragment;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,14 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         //陈宇驰所写:给通话记录按钮添加监听
         //设置按钮监听-通话记录列表
-        Button record_button = (Button) this.findViewById(R.id.record_list);
+        Button record_button = (Button) this.findViewById(R.id.record);
         record_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //点击后切换fragment的内容
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
-                Record_fragment record_fragment = new Record_fragment();
-                transaction.replace(R.id.contact_list_frag,record_fragment);
+                RecordFragment record_fragment = new RecordFragment();
+                transaction.replace(R.id.contact_list_frag, record_fragment);
                 transaction.commit();
             }
         });
