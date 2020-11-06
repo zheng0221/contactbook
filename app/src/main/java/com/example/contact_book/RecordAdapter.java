@@ -14,6 +14,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView recordName;
+        TextView recordNumber;
+        TextView recordDate;
         TextView recordTime;
         TextView recordType;
         TextView recordPlace;
@@ -21,12 +23,15 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         public ViewHolder(View view) {
             super(view);
             recordName = (TextView) view.findViewById(R.id.RecordName);
+            recordNumber = (TextView) view.findViewById(R.id.RecordNumber);
+            recordDate = (TextView) view.findViewById(R.id.RecordDate);
             recordTime = (TextView) view.findViewById(R.id.RecordTime);
             recordType = (TextView) view.findViewById(R.id.RecordType);
             recordPlace = (TextView) view.findViewById(R.id.RecordPlace);
         }
     }
 
+    //初始化
     public RecordAdapter(List<Record> recList) {
         recordList = recList;
     }
@@ -37,11 +42,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
-
+    //绑定数据
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Record record = recordList.get(position);
         holder.recordName.setText(record.getName());
+        holder.recordNumber.setText(record.getNumber());
+        holder.recordDate.setText(record.getDate());
         holder.recordTime.setText(record.getTime());
         holder.recordType.setText(record.getType());
         holder.recordPlace.setText(record.getPlace());
