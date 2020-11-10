@@ -16,18 +16,18 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     private final Context context;
 
     //创建联系人数据库用的SQL语句
-    String create_contact_list_database_sql =
-            "create table " + CONTACT_LIST_DATABASE_NAME + " ("
-                    + "id integer primary key autoincrement"
-                    + ",phone text NOT NULL UNIQUE"
-                    + ",name text"
-                    + ",gender text"
-                    + ",relationship text"
-                    + ",blacklist_mark text"
-                    + ",province text"
-                    + ",city text"
-                    + ",address text"
-                    + ")";
+    String create_contact_list_database_sql=
+            "create table " +CONTACT_LIST_DATABASE_NAME+ " ("
+                    +"name text NOT NULL" +",nickname text"
+                    +",phone text NOT NULL UNIQUE"+",phoneType text"
+                    +",company text"
+                    +",email text"+",remark text"
+                    +",address text"
+                    +",note text"
+                    +",star text"
+                    +",relationship text"
+                    +", primary key(name, phone)"
+                    +")";
 
     //创建通话记录数据库
     String create_record_list_database_sql =

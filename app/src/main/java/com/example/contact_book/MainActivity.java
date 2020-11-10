@@ -1,30 +1,14 @@
 package com.example.contact_book;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.contact_book.RecordFragment;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     private String tag = "My";
@@ -60,18 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void init_contact_list_database(SQLiteDatabase db) {
-        ContentValues values = new ContentValues();
-        values.put("phone", "13501483664");
-        values.put("name", "吴超亮");
-        values.put("gender", "男");
-        values.put("relationship", "自己");
-        values.put("blacklist_mark", "No");
-        values.put("province", "广东省");
-        values.put("city", "广州");
-        values.put("address", "华南理工大学-大学城校区");
-        db.insert("contact_list_database", null, values);
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

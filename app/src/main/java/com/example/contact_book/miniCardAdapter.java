@@ -1,5 +1,7 @@
 package com.example.contact_book;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +14,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class miniCardAdapter extends RecyclerView.Adapter<miniCardAdapter.ViewHolder> {
-    private List<miniCard> dataList;
+    private List<miniCard> contactList;
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        //private TextView textView;
+        TextView nameTextView;
+        TextView phoneTextView;
+        TextView relationshipTextView;
 
         private ViewHolder(View view){
             super(view);
-            //textView=view.findViewById(R.id.minicard_name);
+            nameTextView=(TextView)view.findViewById(R.id.name_TextView);
+            phoneTextView=(TextView)view.findViewById(R.id.phone_TextView);
+            relationshipTextView=(TextView)view.findViewById(R.id.relationship_TextView);
         }
     }
 
-    miniCardAdapter(List<miniCard> cardList){
-        dataList=cardList;
+    miniCardAdapter(List<miniCard> cardList, Context context){
+        contactList=cardList;
+        mContext=context;
     }
 
     @Override
@@ -36,10 +44,12 @@ public class miniCardAdapter extends RecyclerView.Adapter<miniCardAdapter.ViewHo
     }
 
     @Override
-    public int getItemCount(){return dataList.size();}
+    public int getItemCount(){return contactList.size();}
 
     @Override
     public void onBindViewHolder(@NotNull ViewHolder holder,int position){
-        //holder.textView.setText(dataList.get(position).name);
+        holder.nameTextView.setText(contactList.get(position).name);
+        holder.phoneTextView.setText(contactList.get(position).phone);
+        holder.relationshipTextView.setText(contactList.get(position).relationship);
     }
 }

@@ -225,7 +225,7 @@ public class WheelView<T> extends View {
         mItemHeightSpace=a.getDimensionPixelSize(R.styleable.WheelView_itemHeightSpace,getResources().getDimensionPixelSize(R.dimen.WheelItemHeightSpace));
         mIsZoomInSelectedItem=a.getBoolean(R.styleable.WheelView_zoomInSelectedItem,true);
         mIsShowCurtain=a.getBoolean(R.styleable.WheelView_wheelCurtain,true);
-        mCurtainColor=a.getColor(R.styleable.WheelView_wheelCurtainColor,Color.YELLOW);
+        mCurtainColor=a.getColor(R.styleable.WheelView_wheelCurtainColor,Color.parseColor("#00000000"));
         mIsShowCurtainBorder=a.getBoolean(R.styleable.WheelView_wheelCurtainBorder,true);
         mCurtainBorderColor=a.getColor(R.styleable.WheelView_wheelCurtainBorderColor,Color.WHITE);
         mIndicatorText=a.getString(R.styleable.WheelView_indicatorText);
@@ -916,7 +916,6 @@ public class WheelView<T> extends View {
         }
         return position;
     }
-
 
     public interface OnWheelChangeListener<T> {
         void onWheelSelected(T item,int position);

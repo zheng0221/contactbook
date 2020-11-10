@@ -1,79 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- ScrollView遮蔽滑动手势导致被嵌套在内的WheelView对手势没有响应 -->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contactScrollView"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".new_contact_msg_input"
     android:layout_margin="7dp">
 
-    <LinearLayout
-        android:id="@+id/msg_simple"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
-
-        <ImageView
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@android:color/holo_blue_dark" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
+            android:id="@+id/msg_simple"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="250dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <ImageView
+                android:id="@+id/avatarImage"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@android:color/holo_blue_dark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/star_btn"
+                    android:layout_width="80dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/star"/>
+
+                <com.example.contact_book.StringPicker
+                    android:id="@+id/relationshipPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    app:halfVisibleItemCount="1"
+                    app:wheelCurtainBorderColor="#00000000"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/msg_simple" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/avator_item" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/nameInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Name"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/nameExpand_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <EditText
+                        android:id="@+id/nicknameInput_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:hint="Nickname"
+                        android:importantForAutofill="no"
+                        android:inputType="text"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:id="@+id/nameExpand_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
-                android:layout_gravity="center" />
+                android:background="@mipmap/arrow_down" />
 
-            <com.example.contact_book.RelationshipPicker
-                android:id="@+id/relationship_wheel_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:layout_gravity="center"
-                app:halfVisibleItemCount="2"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phone_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/name_input" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/phone_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/phoneInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Phone"
+                    android:importantForAutofill="no"
+                    android:inputType="phone"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/phoneExpand_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <com.example.contact_book.StringPicker
+                        android:id="@+id/phoneTypeInput_StringPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:halfVisibleItemCount="0"
+                        app:wheelCurtainBorderColor="#00000000" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/phoneExpand_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@mipmap/arrow_down" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/company_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/phone_input" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/company_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/companyInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Company"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/company_input" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/email_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/emailInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Email"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/emailExpand_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <EditText
+                        android:id="@+id/emailRemarkInput_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:hint="Remark"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailSubject" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/emailExpand_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@mipmap/arrow_down"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/address_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/email_input" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/address_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/addressInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Address"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/note_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/address_input" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/note_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/noteInput_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Note"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
 
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/test_edit"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:autofillHints="Phone NO"
-        android:hint="Hello"
-        app:layout_constraintTop_toBottomOf="@+id/msg_simple"
-        android:maxLines="1"
-        android:inputType="phone"/>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/test_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/test_edit"
-        android:text="Click" />
-
-    <TextView
-        android:id="@+id/relationship_text"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/test_btn"
-        android:hint="Relationship" />
+        android:id="@+id/saveEvent_btn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:text="Save" />
 
 
 
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

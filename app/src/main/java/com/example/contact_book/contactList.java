@@ -2,6 +2,8 @@
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,11 +20,13 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class contactList extends Fragment {
     private View view;
-    private Vector<miniCard> data=new Vector<miniCard>();
+    private List<miniCard> dataList=new ArrayList<>();
 
     public contactList() {
         // Required empty public constructor
@@ -32,10 +36,28 @@ public class contactList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        initData(data);
         view=inflater.inflate(R.layout.fragment_contact_list,container,false);
+        initDataList();
         initRecyclerView();
         return view;
+    }
+
+    private void initDataList() {
+        dataList.clear();
+        MySQLiteOpenHelper helper=new MySQLiteOpenHelper(view.getContext());
+        SQLiteDatabase db=helper.getWritableDatabase();
+
+        Cursor cursor=db.query("contact_list_database",null,null,null,null,null,null);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+            return;
+        do{
+            String name=cursor.getString(cursor.getColumnIndex("name"));
+            String phone=cursor.getString(cursor.getColumnIndex("phone"));
+            String relationship=cursor.getString(cursor.getColumnIndex("relationship"));
+            miniCard card=new miniCard(name,phone,relationship);
+            dataList.add(card);
+        }while(cursor.moveToNext());
     }
 
     @Override
@@ -68,27 +90,10 @@ public class contactList extends Fragment {
         RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.contact_list);
 
         //实例化名片的Adapter
-        miniCardAdapter adapter=new miniCardAdapter(data);
+        miniCardAdapter adapter=new miniCardAdapter(dataList,getContext());
 
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
-
-    //用于测试
-    private void initData(Vector<miniCard> inList){
-        for(int i=0;i!=3;++i){
-            inList.add(new miniCard("Alan"));
-            inList.add(new miniCard("Anne"));
-            inList.add(new miniCard("Bob"));
-            inList.add(new miniCard("Bluse"));
-            inList.add(new miniCard("Carly"));
-            inList.add(new miniCard("Cindy"));
-            inList.add(new miniCard("Dante"));
-            inList.add(new miniCard("Dasic"));
-            inList.add(new miniCard("Effa"));
-            inList.add(new miniCard("Emily"));
-        }
-    }
-
 }
