@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -19,6 +21,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button tickle_button = (Button) findViewById(R.id.tickle);
+        tickle_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,CareText.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
         //陈宇驰所写:给通话记录按钮添加监听
         //设置按钮监听-通话记录列表

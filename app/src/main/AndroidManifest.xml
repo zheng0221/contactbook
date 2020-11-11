@@ -2,15 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contact_book">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+
+
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
+        android:usesCleartextTraffic="true"
+
         android:theme="@style/AppTheme">
+        <activity android:name=".CareText"></activity>
         <activity
             android:name=".new_contact_msg_input"
             android:theme="@style/NoTitleFullscreen" />
@@ -26,12 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider
-            android:authorities="com.example.contact_book.provider"
-            android:name="com.example.contact_book.MyProvider"
-            android:exported="true"
-            android:enabled="true"/>
-    </application>
 
+        <provider
+            android:name=".MyProvider"
+            android:authorities="com.example.contact_book.provider"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
 
 </manifest>
