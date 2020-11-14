@@ -9,13 +9,13 @@ public class Record {
     private String Type;
     private String Place;
 
-    public Record(String name, String number, String date, String time, String type) {
+    public Record(String name, String number, String date, String time, String type,String place) {
         this.Name = name;
         this.Number = number;
         this.Date = date;
         this.Time = time;
         this.Type = type;
-        this.Place = "";
+        this.Place = place;
     }
 
     public String getName() {
