@@ -1,6 +1,7 @@
 package com.example.contact_book;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -19,14 +20,15 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     String create_contact_list_database_sql=
             "create table " +CONTACT_LIST_DATABASE_NAME+ " ("
                     +"name text NOT NULL" +",nickname text"
-                    +",phone text NOT NULL UNIQUE"+",phoneType text"
+                    +",phone text NOT NULL UNIQUE"+",phoneType integer"
                     +",company text"
                     +",email text"+",remark text"
                     +",address text"
                     +",note text"
-                    +",star text"
-                    +",relationship text"
-                    +", primary key(name, phone)"
+                    +",star integer"
+                    +",relationship integer"
+                    +",avatar blob"
+                    +", primary key(phone)"
                     +")";
 
     //创建通话记录数据库

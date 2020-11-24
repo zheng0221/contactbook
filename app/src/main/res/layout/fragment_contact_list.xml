@@ -33,13 +33,13 @@
             app:fab_title="添加" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/wheelview_btn"
+            android:id="@+id/phoneCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_size="mini"
             app:fab_colorNormal="@android:color/holo_orange_light"
             app:fab_colorPressed="@android:color/holo_orange_dark"
-            app:fab_title="哈哈" />
+            app:fab_title="拨号" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

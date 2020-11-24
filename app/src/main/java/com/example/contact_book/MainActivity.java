@@ -49,26 +49,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final FragmentManager fm =getSupportFragmentManager();
+        final RecordFragment record_fragment = new RecordFragment();
+        final contactList conF=new contactList();
+
         //陈宇驰所写:给通话记录按钮添加监听   设置按钮监听-通话记录列表
         Button record_button = (Button) this.findViewById(R.id.record);
         record_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击后切换fragment的内容
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                RecordFragment record_fragment = new RecordFragment();
-                transaction.replace(R.id.contact_list_frag, record_fragment);
-                transaction.commit();
+                fm.beginTransaction().replace(R.id.fragment, record_fragment).commit();
             }
         });
 
-
-        //数据库连接
-        mySQLiteOpenHelper = new MySQLiteOpenHelper(MainActivity.this);
-        db = mySQLiteOpenHelper.getWritableDatabase();
-
-        //init_contact_list_database(db);
+        Button contact_btn=(Button)findViewById(R.id.contacts_button);
+        contact_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm.beginTransaction().replace(R.id.fragment, conF).commit();
+            }
+        });
 
     }
 
@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //关闭数据库连接
-        db.close();
-        mySQLiteOpenHelper.close();
     }
 
     //权限判断和申请

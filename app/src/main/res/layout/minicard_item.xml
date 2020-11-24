@@ -1,63 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/miniCardView"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/avatarImageView"
         android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:background="@mipmap/test" />
+        android:layout_height="100dp"
+        android:background="#F5F5F5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <LinearLayout
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/name_TextView"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@id/avatarImageView"
+        app:layout_constraintEnd_toStartOf="@id/star_btn_miniView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/phone_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/avatarImageView"
+        app:layout_constraintEnd_toStartOf="@id/star_btn_miniView"
+        app:layout_constraintTop_toBottomOf="@id/name_TextView"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/relationship_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/avatarImageView"
+        app:layout_constraintEnd_toStartOf="@id/star_btn_miniView"
+        app:layout_constraintTop_toBottomOf="@id/phone_TextView"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/phoneTypeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/avatarImageView"
+        app:layout_constraintEnd_toStartOf="@id/star_btn_miniView"
+        app:layout_constraintTop_toBottomOf="@id/relationship_TextView"
+        android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:text="Edit"
+        android:background="#85C1E9"
+        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
+        android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/name_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"/>
-
-        <TextView
-            android:id="@+id/phone_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/relationship_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"/>
-
-
-    </LinearLayout>
-
-    <RelativeLayout
-
-        android:layout_width="50dp"
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:text="Delete"
+        android:background="#CD6155"
+        app:layout_constraintEnd_toStartOf="@id/star_btn_miniView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
+        android:visibility="gone"/>
 
-        <Button
-            android:id="@+id/setting_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@mipmap/setting"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+    <Button
+        android:id="@+id/callButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Call"
+        android:background="#FFBF00"
+        app:layout_constraintEnd_toStartOf="@id/editButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/star_btn_miniView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@mipmap/star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@mipmap/star"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/miniCardViewExpand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/avatarImageView"
+        android:visibility="gone">
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/nicknameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/nicknameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nicknameLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/companyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公司: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nicknameLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/companyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/nicknameLabel"
+            app:layout_constraintStart_toEndOf="@id/companyLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邮箱: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/companyLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/emailLabel"
+            app:layout_constraintTop_toBottomOf="@id/companyLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/remarkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailLabel"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/addressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remarkText"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/addressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/addressLabel"
+            app:layout_constraintTop_toBottomOf="@id/remarkText"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/noteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addressLabel"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/noteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/noteLabel"
+            app:layout_constraintTop_toBottomOf="@id/addressLabel"
+            android:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
