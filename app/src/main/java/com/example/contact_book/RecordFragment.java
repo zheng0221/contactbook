@@ -27,8 +27,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,8 +47,6 @@ public class RecordFragment extends Fragment {
     private Context context;
     private View view;
     private SQLiteDatabase db;
-    private RecordAdapter adapter;
-    private RecyclerView recyclerView;
     private List<Record> recordList = new ArrayList<>();    //通话记录列表
     private String[] columns = {CallLog.Calls.CACHED_NAME// 通话记录的联系人
             , CallLog.Calls.NUMBER          // 通话记录的电话号码
@@ -64,31 +61,27 @@ public class RecordFragment extends Fragment {
         view = inflater.inflate(R.layout.record_list, container, false);
         initRecord(); // 初始化数据
         //创建View
-        recyclerView = (RecyclerView) view.findViewById(R.id.record_recyclerview);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.record_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         //设置recyclerView每个子项的分割线
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(layoutManager);
-        setAdapter(recordList);
-        return view;
-    }
-
-    private void setAdapter(List<Record> recordList1) {
-        adapter = new RecordAdapter(recordList1);  //装载数据
+        RecordAdapter adapter = new RecordAdapter(recordList);  //装载数据
         adapter.setItemClickListener(new RecordAdapter.setOnClickListener() {   //设置item点击事件
             @Override
             public void Onclick(String s) {
-                String number = s;
-                Log.d(TAG, number);
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                intent.putExtra("number", number);
+                String number=s;
+                Log.d(TAG,number);
+                Intent intent=new Intent(getActivity(),RecordActivity.class);
+                intent.putExtra("number",number);
                 startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
         Log.d(TAG, "record_fragment加载完成");
+        return view;
     }
 
     @Override
@@ -104,21 +97,6 @@ public class RecordFragment extends Fragment {
         Log.d(TAG, "record_list初始化数据");
         //checkContentProvider();
         initDB();
-
-//         判断归属地数据库是否有数据
-//        try {
-//            Thread.sleep(10000);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        Cursor cursor2 = db.rawQuery("select * from number_place_database", null);
-//        while (cursor2.moveToNext()){
-//            String number = cursor2.getString(cursor2.getColumnIndex("number"));
-//            String place = cursor2.getString(cursor2.getColumnIndex("place"));
-//            Log.d(TAG,number + place);
-//        }
-
-
         Cursor cursor = db.rawQuery("select *,max(datetime(date)) from record_list_database group by name", null);
         if (cursor == null)
             Toast.makeText(context, "数据库无通话记录。", Toast.LENGTH_LONG).show();
@@ -129,14 +107,7 @@ public class RecordFragment extends Fragment {
                 String date = cursor.getString(cursor.getColumnIndex("date"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
                 String type = cursor.getString(cursor.getColumnIndex("type"));
-                Cursor cursor1 = db.rawQuery("select * from number_place_database where number = ?", new String[]{number});
-                String place = "";
-                if (cursor1.getCount() != 0) {
-                    while (cursor1.moveToNext()) {
-                        place = cursor1.getString(cursor1.getColumnIndex("place"));
-                    }
-                }
-                Record record = new Record(name, number, date, time, type, place);     //初始化一条记录
+                Record record = new Record(name, number, date, time, type, "");     //初始化一条记录
                 recordList.add(record);
             }
     }
@@ -145,13 +116,12 @@ public class RecordFragment extends Fragment {
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null,
                 null, null, "DATE ASC");  //正排序
         //依次读取cursor =====注意!虚拟机没有通话记录，要自己先打几个
-        final List<String> number_place = new ArrayList<String>();
         if (cursor == null)
             Toast.makeText(context, "暂无通话记录。", Toast.LENGTH_LONG).show();
         else
             while (cursor.moveToNext()) {
                 String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));   //姓名
-                final String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));      //号码
+                String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));      //号码
                 long dateLong = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));          //获取通话日期，时间戳
                 String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(dateLong));
                 int duration_int = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));    //获取通话时长，值为多少秒
@@ -163,33 +133,9 @@ public class RecordFragment extends Fragment {
                     name = number;
                 Cursor cursor1 = db.rawQuery("select * from record_list_database where name=? and number = ? and date =?",
                         new String[]{name, number, date});
-                if (cursor1.getCount() == 0) {    //如果数据是不重复的
+                if (cursor1.getCount() == 0)    //如果数据是不重复的
                     insertDB(name, number, date, time, type);    //插入进数据库
-                    //更新归属地数据库
-                    final String number2 = number;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!number_place.contains(number2)) {
-                                number_place.add(number2);
-                                Cursor cursor2 = db.rawQuery("select * from number_place_database where number = ?", new String[]{number2});
-                                if (cursor2.getCount() == 0) {    //如果该号码不存在
-                                    ContentValues values = new ContentValues();//插入进数据库
-                                    values.put("number", number2);
-                                    values.put("place", getPlace(number2));
-                                    db.insert("number_place_database", null, values);
-                                }
-                            }
-                        }
-                    }).start();
-                }
             }
-    }
-
-    public void refresh() {
-        recordList.clear();
-        initRecord();
-        setAdapter(recordList);
     }
 
     private String getType(int type_int) {
@@ -235,6 +181,25 @@ public class RecordFragment extends Fragment {
         return time;
     }
 
+    private int timeCompare(String time1, String time2) {
+        //格式化时间
+        SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            Date beginTime = CurrentTime.parse(time1);
+            Date endTime = CurrentTime.parse(time2);
+            //判断是否大于两天
+            if ((beginTime.getTime() - endTime.getTime()) >= 0) {
+                return 1;
+            } else {
+                return 2;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private void insertDB(String name, String number, String date, String time, String type) {
         ContentValues values = new ContentValues();
         values.put("name", name);
@@ -245,21 +210,40 @@ public class RecordFragment extends Fragment {
         db.insert("record_list_database", null, values);
     }
 
+    private void checkContentProvider() {
+        //为contentProvider测试一下是否有数据
+        Cursor c = db.query("record_list_database", null, null, null, null, null, null);
+        if (c == null)
+            Toast.makeText(getContext(), "暂无通话记录。", Toast.LENGTH_LONG).show();
+        else
+            while (c.moveToNext()) {
+                String name = c.getString(c.getColumnIndex("number"));
+                Toast.makeText(getContext(), name, Toast.LENGTH_LONG).show();
+                break;
+            }
+    }
+
+    private void checkContentResolver() {
+        Uri uri = Uri.parse("content://com.example.contact_book.provider/record_list_database");
+        Cursor c = context.getContentResolver().query(uri, null, null, null, null);
+        if (c == null)
+            Toast.makeText(context, "暂无通话记录。", Toast.LENGTH_LONG).show();
+        else
+            while (c.moveToNext()) {
+                String name = c.getString(c.getColumnIndex("name"));
+                Toast.makeText(context, "读取的第一个名字:" + name, Toast.LENGTH_LONG).show();
+                break;
+            }
+    }
+
     private String getPlace(final String number) {
-        String address = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + number;
+        String address = "http://www.webxml.com.cn/WebServices/MobileCodeWS.asmx/getMobileCodeInfo?mobileCode=" + number + "&UserID=";
         final String[] place = new String[2];
         HttpUtil.sendHttpRequest(address, new CareText.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
-                String content = response.split("[=]")[1];
-                place[0] = "未知";
-                Log.d(TAG, content);
-                try {
-                    JSONObject jsonObject = new JSONObject(content);
-                    place[0] = jsonObject.optString("province", null);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.d(TAG, response);
+                place[0] = response.split("[ ]")[3].split("[：]")[1] + " " + response.split("[ ]")[4];
                 place[1] = number; //保证子线程执行完后才继续主线程
                 Log.d(TAG, place[0]);
             }
@@ -293,7 +277,7 @@ public class RecordFragment extends Fragment {
                         connection = (HttpURLConnection) url.openConnection();
                         connection.setRequestMethod("GET");
                         InputStream in = connection.getInputStream();
-                        reader = new BufferedReader(new InputStreamReader(in, "GBK"));   //判断是否用GBK解析
+                        reader = new BufferedReader(new InputStreamReader(in));
                         StringBuilder response = new StringBuilder();
                         String line;
                         while ((line = reader.readLine()) != null) {
@@ -328,31 +312,4 @@ public class RecordFragment extends Fragment {
             void onError(Exception e);
         }
     }
-
-    private void checkContentProvider() {
-        //为contentProvider测试一下是否有数据
-        Cursor c = db.query("record_list_database", null, null, null, null, null, null);
-        if (c == null)
-            Toast.makeText(getContext(), "暂无通话记录。", Toast.LENGTH_LONG).show();
-        else
-            while (c.moveToNext()) {
-                String name = c.getString(c.getColumnIndex("number"));
-                Toast.makeText(getContext(), name, Toast.LENGTH_LONG).show();
-                break;
-            }
-    }
-
-    private void checkContentResolver() {
-        Uri uri = Uri.parse("content://com.example.contact_book.provider/record_list_database");
-        Cursor c = context.getContentResolver().query(uri, null, null, null, null);
-        if (c == null)
-            Toast.makeText(context, "暂无通话记录。", Toast.LENGTH_LONG).show();
-        else
-            while (c.moveToNext()) {
-                String name = c.getString(c.getColumnIndex("name"));
-                Toast.makeText(context, "读取的第一个名字:" + name, Toast.LENGTH_LONG).show();
-                break;
-            }
-    }
-
 }

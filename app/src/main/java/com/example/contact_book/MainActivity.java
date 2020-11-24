@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //有权限没有通过，需要申请
         if (unPermissionList.size() > 0) {
-            ActivityCompat.requestPermissions(this,permissionList, 100);
+            ActivityCompat.requestPermissions(this,permissionList, 100);    //TODO 申请权限的时候闪退，应该是这里有问题
             Log.d(tag, "check 有权限未通过");
         } else {
             //权限已经都通过了，可以将程序继续打开了
