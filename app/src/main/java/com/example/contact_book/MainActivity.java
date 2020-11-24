@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         final RecordFragment record_fragment = new RecordFragment();
         final contactList conF=new contactList();
 
+        fm.beginTransaction().replace(R.id.fragment,conF).commit();
+
         //陈宇驰所写:给通话记录按钮添加监听   设置按钮监听-通话记录列表
         Button record_button = (Button) this.findViewById(R.id.record);
         record_button.setOnClickListener(new View.OnClickListener() {
