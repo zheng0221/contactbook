@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordActivity extends AppCompatActivity {
+public class RecordActivity extends AppCompatActivity {     //单个号码的详细通话记录列表
     public final String TAG = "MAIN";                       //log使用的tag
     private SQLiteDatabase db;
     private List<Record> recordList = new ArrayList<>();    //通话记录列表
@@ -53,7 +53,14 @@ public class RecordActivity extends AppCompatActivity {
                 String date = cursor.getString(cursor.getColumnIndex("date"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
                 String type = cursor.getString(cursor.getColumnIndex("type"));
-                Record record = new Record(name, number, date, time, type, "");     //初始化一条记录
+                Cursor cursor1 = db.rawQuery("select * from number_place_database where number = ?", new String[]{number});
+                String place = "";
+                if (cursor1.getCount() != 0) {
+                    while (cursor1.moveToNext()) {
+                        place = cursor1.getString(cursor1.getColumnIndex("place"));
+                    }
+                }
+                Record record = new Record(name, number, date, time, type, place);     //初始化一条记录
                 recordList.add(record);
             }
     }
