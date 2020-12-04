@@ -92,6 +92,12 @@ public class RecordFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         this.context = context;

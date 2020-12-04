@@ -60,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
         record_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击后切换fragment的内容
-                RecordFragment record_fragment = new RecordFragment();
-                //transaction.replace(R.id.contact_list_frag, record_fragment);
                 fm.beginTransaction().replace(R.id.fragment, record_fragment).commit();
             }
         });
